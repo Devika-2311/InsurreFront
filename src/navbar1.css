@@ -1,0 +1,186 @@
+.logo-name{
+    /* Insurre */
+     
+    position: absolute;
+    width: 88px;
+    height: 30px;
+    left: 141px;
+    top: 5px;
+     
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 23px;
+     
+    color: #000000;
+     
+     
+     
+     
+     
+    }
+     
+     
+     
+     
+    .home{
+    /* Home */
+     
+    position: absolute;
+    width: 88px;
+    height: 30px;
+    left: 930px;
+    top: 30px;
+     
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+     
+    color: #000000;
+     
+     
+     
+     
+     
+       
+    }
+     
+     
+    .username{
+    /* Username */
+     
+    position: absolute;
+    width: 88px;
+    height: 30px;
+    left: 1045px;
+    top: 30px;
+     
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+     
+    color: #000000;
+     
+     
+    }
+     
+     
+    .mypolicies{
+    /* My policies */
+     
+    position: absolute;
+    width: 88px;
+    height: 30px;
+    left: 1168px;
+    top: 29px;
+     
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+     
+    color: #000000;
+     
+     
+     
+     
+    }
+     
+    .helpme{
+    /* Help me */
+     
+    position: absolute;
+    width: 88px;
+    height: 30px;
+    left: 1304px;
+    top: 29px;
+     
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+     
+    color: #000000;
+     
+     
+     
+     
+     
+    }
+     
+    .logout{
+    /* Log out */
+     
+    position: absolute;
+    width: 88px;
+    height: 30px;
+    left: 1432px;
+    top: 29px;
+     
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 23px;
+     
+    color: #000000;
+     
+     
+     
+     
+     
+    }
+     
+     
+     
+     
+    .logo{
+    /* Group 28 */
+     
+    position: absolute;
+    width: 82.67px;
+    height: 59.85px;
+    left: 26px;
+    top: 10px;
+     
+     
+     
+     
+    }
+     
+     
+    .navbar{
+    /* Rectangle 8 */
+     
+    position: absolute;
+    width: 1536px;
+    height: 81px;
+    left: 0px;
+    top: 0px;
+     
+    background: #BFBFFF;
+     
+     
+    }
+     
+    .navbar a {
+        text-decoration: none; /* Remove underline */
+        color: inherit; /* Inherit color from parent element */
+    }
+    .navbar ul {
+        list-style-type: none; /* Remove default bullet points */
+        padding: 0; /* Remove default padding */
+        margin: 0; /* Remove default margin */
+    }
+     
+    .navbar li {
+        display: inline-block; /* Display list items horizontally */
+        margin-right: 10px; /* Add some spacing between list items */
+    }

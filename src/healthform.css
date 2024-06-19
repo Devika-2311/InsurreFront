@@ -1,0 +1,89 @@
+/* healthform.css */
+ 
+.health-form-container {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 20px;
+}
+ 
+.form-title {
+    text-align: center;
+    color: #3D348B;
+    font-size: 2rem;
+}
+ 
+.form-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+}
+ 
+.form-content {
+    display: flex;
+    justify-content: space-between;
+}
+ 
+.form-left {
+    width: 40%;
+    text-align: center;
+}
+ 
+.purchase-request {
+    display: block;
+    margin: 0 auto 20px auto;
+    padding: 10px 20px;
+    background-color: #3D348B;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+ 
+.form-image {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+}
+ 
+.form-right {
+    width: 55%;
+}
+ 
+.form-group {
+    margin-bottom: 20px;
+}
+ 
+.form-group label {
+    display: block;
+    color: #333;
+    margin-bottom: 5px;
+}
+ 
+.form-input, .form-options {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+ 
+.form-options input {
+    margin-right: 10px;
+}
+ 
+.upload-report, .submit {
+    width: 100%;
+    padding: 10px;
+    background-color: #3D348B;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+}
+ 
+.upload-report:hover, .submit:hover {
+    background-color: #291F6D;
+}
+ 
+.alert {
+    text-align: center;
+    margin-top: 20px;
+}

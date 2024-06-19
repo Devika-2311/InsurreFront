@@ -1,0 +1,21 @@
+table {
+    text-align: center;
+    width: 100%;
+    table-layout: auto;
+    text-align: center;
+    border: black solid 2px;
+    border-collapse: collapse;
+}
+ 
+th,
+td {
+    border: black solid 2px;
+    border-collapse: collapse;
+ 
+}
+ 
+.buttt {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: center;
+}

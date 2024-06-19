@@ -1,0 +1,90 @@
+/* TermPolicyForm.css */
+ 
+.term-form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+ 
+  .form-title {
+    color: #3D348B;
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+ 
+  .form-subtitle {
+    color: #666;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+ 
+  .form-content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+  }
+ 
+  .form-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+  }
+ 
+  .purchase-request {
+    background-color: #3D348B;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+ 
+  .form-image {
+    width: 200px;
+  }
+ 
+  .form-right {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+  }
+ 
+  .form-group {
+    margin-bottom: 15px;
+  }
+ 
+  .form-group label {
+    display: block;
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 5px;
+  }
+ 
+  .form-input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+ 
+  .form-options {
+    display: flex;
+    justify-content: space-around;
+  }
+ 
+  .submit {
+    padding: 10px 20px;
+    background-color: #3D348B;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+ 
+  .submit:hover {
+    background-color: #291F6D;
+  }
