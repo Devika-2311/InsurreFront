@@ -2,7 +2,7 @@ import React, { useEffect, useState,useContext} from 'react';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from './usercontext';
+import { AppContext } from './AppContext';
 
 import './mypolicy.css';
  
@@ -11,12 +11,15 @@ const MyPolicies = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const policiesPerPage = 8; // Number of policies per page (3 rows of 4 cards each)
-  const { suserId } = useContext(UserContext);
+  const { suserId } = useContext(AppContext);
   const location = useLocation();
   const navigate = useNavigate();
 
   const handleViewClick = (userpolicyId) => {
     navigate('/policydetails', { state: { userpolicyId } });
+  };
+  const handlePayClick = (userpolicyId) => {
+    navigate('/payment', { state: { userpolicyId } });
   };
 
  
@@ -83,7 +86,7 @@ const MyPolicies = () => {
                 ) : (
                   <>
                     <button className="buy-again"  onClick={() => handleViewClick(policy.userPolicyId)}>view</button>
-                    <button className="pay-premium">Pay Premium</button>
+                    <button className="pay-premium"  onClick={() => handlePayClick(policy.userPolicyId)}>Pay Premium</button>
                   </>
                 )}
               </>

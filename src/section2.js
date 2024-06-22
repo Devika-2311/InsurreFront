@@ -6,13 +6,13 @@ import autoinsurance from '../src/images/userimages/autoinsurance.png';
 import healthinsurance from '../src/images/userimages/healthinsurance.png';
 import terminsurance from '../src/images/userimages/lifeinsurance.png';
 import Section1 from './section1';
-import { UserContext } from './usercontext';
+import { AppContext } from './AppContext';
 import Navbar1 from './navbar1';
-import Calculator from './premiumCalculator';
+
  
 function Section2() {
   const navigate = useNavigate();
-  const { suserId } = useContext(UserContext);
+  const { suserId } = useContext(AppContext);
  
   const navigateToComponent = (path) => {
     navigate(path);
@@ -42,7 +42,6 @@ function Section2() {
           <p className='termtext'>Life’s Safeguard: Your Journey to Financial Security Begins Here!</p>
         </div>
       </div>
-      <Calculator/>
     </div>
   );
 }

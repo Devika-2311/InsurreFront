@@ -1,80 +1,89 @@
 import React, { useEffect, useState } from 'react';
-import './renew.css'
-import pic from '../src/images/logosfolder/renewpic.png';
-import axios from 'axios';
 import { useLocation } from 'react-router-dom';
-
+import './renew.css'
+// import pic from '../Assets/renewpic.png'
+import axios from 'axios';
 const PolicyRenewal = () => {
-  const [newTermPeriod, setNewTermPeriod] = useState('');
-  const [renew, setRenew] = useState(false);
-  const [newData, setNewData] = useState('');
-  const [status, setStatus] = useState('');
-  const location = useLocation();
-  const { userpolicyId } = location.state || {};
-
-  const fetchUserPolicyData = async () => {
-    if (!userpolicyId) {
-      console.error('No policy ID provided');
-      return;
-    }
-    try {
-      const response = await axios.get(`http://localhost:8007/user-policies/${userpolicyId}`);
-      setNewData(response.data); // Assuming response.data is the updated policy object
-      console.log(response.data);
-    } catch (error) {
-      console.error('Error fetching user policy data:', error);
-    }
-  };
-
-  const incrementedEndDate = new Date(newData.endDate);
-  useEffect(() => { fetchUserPolicyData() }, [userpolicyId]);
-
-  const submit1 = async () => {
-    if (incrementedEndDate.getDate() - 1 !== new Date().getDate()) {
-      window.alert(`Renewal is only possible on Last Policy Serving Day. Come on ${newData.endDate} to renew`);
-    } else {
-      const confirmation = window.confirm('Are you sure you want to submit');
-      if (confirmation) {
+    const [newTermPeriod, setNewTermPeriod] = useState('');
+    const [renew, setRenew] = useState(false);
+ 
+    const [newData, setNewData] = useState('');
+    const [status, setStatus] = useState('');
+    const location = useLocation();
+    const { userpolicyId } = location.state || {};
+  
+    const claim_type=localStorage.getItem('claim_type');
+   
+ 
+    const fetchUserPolicyData = async () => {
+        
         try {
-          const response = await axios.put(`http://localhost:8007/user-policies/renew/${userpolicyId}`);
-          console.log(response);
-          setStatus(response.status === 200);
+            const response = await axios.get(`http://localhost:8007/user-policies/readOne/${userpolicyId}`);
+            setNewData(response.data); // Assuming response.data is the updated policy object
+           
         } catch (error) {
-          console.error(error?.response?.data?.message);
-          window.alert(error?.response?.data?.message);
+            console.error('Error fetching user policy data:', error);
         }
-      }
     }
-  };
-
-  incrementedEndDate.setFullYear(incrementedEndDate.getFullYear() + parseInt(newData.term));
-  const incrementedEndDateString = `${incrementedEndDate.getFullYear()}-${String(incrementedEndDate.getMonth() + 1).padStart(2, '0')}-${String(incrementedEndDate.getDate()).padStart(2, '0')}`;
-
-  const newterm = parseInt(newData.term) + parseInt(newTermPeriod);
-  const coveragePerYear = parseInt(newData.coverage) / parseInt(newData.term);
-  const newcov = coveragePerYear * newterm;
-  const newleft = (coveragePerYear * parseInt(newTermPeriod)) + parseInt(newData.leftcoverage);
-
-  const [newPolicy, setNewPolicy] = useState(false);
-  const newp = (e) => {
-    setNewTermPeriod(e);
-    if (e.length === 0)
-      setNewPolicy(false);
-    else setNewPolicy(true);
-  };
-  const renewp = (e) => {
-    if (!e) {
-      setRenew(false);
-      setNewPolicy(false);
-    } else {
-      setNewTermPeriod('');
-      setRenew(true);
+    const incrementedEndDate = new Date(newData.endDate);
+    useEffect(() => { fetchUserPolicyData() }, [newData])
+    const submit1 = async () => {
+      
+        var confirmation = window.confirm('Are you sure you want to submit');
+        if (confirmation) {
+            try {
+                const response = await axios.put(`http://localhost:8007/user-policies/renew/${userpolicyId}`);
+               
+                setStatus(response);
+                const expireResponse = await axios.put(`http://localhost:8007/${claim_type}/expire/${userpolicyId}`);
+             
+                // setStatus(expireResponse.status === 200);
+            } catch (error) {
+                console.error(error?.response?.data?.message);
+                window.alert(error?.response?.data?.message);
+            }
+        }
     }
-  };
+    // }
+ 
+    // const incrementedEndDate = new Date(newData.endDate);
+    incrementedEndDate.setFullYear(incrementedEndDate.getFullYear() + parseInt(newData.term));
+    //const incrementedEndDateString = incrementedEndDate.toLocaleDateString('en-GB');
+    const incrementedEndDateString = `${incrementedEndDate.getFullYear()}-${String(incrementedEndDate.getMonth() + 1).padStart(2, '0')}-${String(incrementedEndDate.getDate()).padStart(2, '0')}`;
+   
+ 
+    const newterm = parseInt(newData.term) + parseInt(newTermPeriod);
+    const coveragePerYear = parseInt(newData.coverage) / parseInt(newData.term);
+    const newcov = coveragePerYear * newterm;
+    const newleft = (coveragePerYear * parseInt(newTermPeriod)) + parseInt(newData.leftcoverage);
+ 
+    //const newenddate=Date.parse(newData.endDate);
+ 
+    // console.log(typeof(newenddate+1),newenddate);
+ 
+    const [newPolicy, setNewPolicy] = useState(false);
+    const newp = (e) => {
+        setNewTermPeriod(e);
+        if (e.length == 0)
+            setNewPolicy(false);
+        else setNewPolicy(true);
+    }
+    const renewp = (e) => {
+        if (!e) {
+            setRenew(false);
+            setNewPolicy(false);
+        }
+        else {
+            setNewTermPeriod('');
+            setRenew(true)
+        };
+    }
+ 
+ 
  
     return (
         <div className='base'>
-            <img className='pic' src={pic} alt='Image'></img>
+            {/* <img className='pic' src={pic} alt='Image'></img> */}
             <div className="top">
                 <div className="content">
                     <p className='heading'>Renew Your Policy</p>

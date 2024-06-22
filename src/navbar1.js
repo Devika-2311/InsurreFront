@@ -19,7 +19,8 @@ function Navbar1() {
           <li className="home"><a href="#">Home</a></li>
           <li className="username"><a href="#">Username</a></li>
           <li className="mypolicies"><Link to="/mypolicies">mypolicies</Link></li>
-          <li className="helpme"><a href="#">Helpme</a></li>
+          <li className="viewTickets"><Link to="/viewTickets">view Tickets</Link></li>
+          <li className="helpme"><Link to="/helpme">Helpme</Link></li>
           <li className="logout"><a href="#">logout</a></li>
         </ul>
       </div>

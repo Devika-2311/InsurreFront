@@ -6,7 +6,6 @@ const UserLogin = () => {
     return (
         <div>
             <LoginComponent
-                loginUrl="http://localhost:8007/users/login"
                 welcomsmsg="Welcome back User"
                 imageUrl={userlogimg}
                 role="user"

@@ -1,0 +1,160 @@
+/* help.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+ 
+.background {
+    background-color: purple;
+    min-height: 100vh; /* Ensures the background covers the full viewport height */
+    display: flex;
+    flex-direction: column;
+}
+ 
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #DFDFF6;
+    padding: 10px 20px;
+    color: white;
+}
+ 
+.logo {
+    height: 50px;
+    margin-right: 9%;
+    margin-left: 15%;
+}
+ 
+.greeting {
+    font-size: 2rem;
+    color: black;
+}
+ 
+.main-body {
+    flex: 1;
+    width: 100%;
+    background-color: #DFDFF6; /* Matches the outer background color */
+    /* display: flex; */
+    justify-content: center;
+   
+}
+ 
+.upperhead {
+    color: rgb(9, 9, 9); /* Ensures the text is readable on a purple background */
+    margin-top: 3rem; /* Reset margin to avoid large spacing */
+    text-align: center;
+    font-size: x-large;
+    margin-right: auto;
+}
+.white-box {
+    background-color: white;
+    border-radius: 8px;
+    height: 27rem;
+    padding: 2rem 8rem;
+    width: 50%;
+    /* Adjusted to make the box smaller */
+    /* width: 600px; */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    margin-left: 20%;
+    margin-top: 4rem;
+}
+ 
+.box-heading {
+    margin-top: 1.5rem;
+    margin-right: 3%;
+    text-align: center;
+    color: black;
+}
+ 
+.ticket-form {
+    display: flex;
+    width: 100%;
+    height: 10rem;
+    justify-content: space-between;
+    /* margin-right: 5rem; */
+}
+ 
+.form-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+}
+ 
+.form-groupp {
+    /* display: flex;
+    flex-direction: column;
+    margin-bottom: 15px; */
+    /* height: 10%; */
+    width: 70%;
+    margin-top: 3rem;
+    /* padding: 10px; */
+}
+.form-group {
+    /* display: flex;
+    flex-direction: column;
+    margin-bottom: 15px; */
+    width: 70%;
+    margin-top: 2.5rem;
+}
+ 
+.form-group label {
+    margin-bottom: 5px;
+}
+ 
+.form-right {
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    left: 20rem;
+}
+ 
+.text-box {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    /* width: 100%; */
+    margin-top: 7%;
+    margin-left: 6rem;
+}
+.text-boxx {
+    padding: 10px;
+    border: 1px solid #e5dede;
+    border-radius: 4px;
+    width: 90%;
+    margin-top: 7%;
+    margin-left: 6rem;
+}
+ 
+.submittt-button {
+    padding: 10px 20px;
+    background-color: rgb(141, 74, 141);
+    color: white;
+    /* border: none; */
+    /* border-radius: 4px; */
+    cursor: pointer;
+    width: 10rem;
+    margin-top : 12%;
+}
+ 
+.image-placeholder {
+    width: 150px;
+    height: 150px;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed #ccc;
+    color: #888;
+}
+.ag-image{
+    /* margin-left: 25rem; */
+    margin-left: 40%;
+    /* margin-top: 0%; */
+    position: relative;
+}

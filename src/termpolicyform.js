@@ -1,44 +1,51 @@
 import React, { useState, useContext } from 'react';
 import Navbar1 from './navbar1';
-import { UserContext } from './usercontext';
+import { AppContext } from './AppContext';
 import axios from 'axios';
 import './termpolicyform.css'; // Ensure to create a CSS file for styling
- 
- 
+
 const TermPolicyForm = () => {
   const [annualIncome, setAnnualIncome] = useState('');
   const [anyDisease, setAnyDisease] = useState(false);
   const [nomineeName, setNomineeName] = useState('');
   const [nomineeRelation, setNomineeRelation] = useState('');
   const [nomineeEmail, setNomineeEmail] = useState('');
-  const [nomineeProof, setNomineeProof] = useState('');
-  const { suserPolicyId } = useContext(UserContext);
+  const [nomineeProof, setNomineeProof] = useState(null);
+  const { suserPolicyId } = useContext(AppContext);
   const [responseMessage, setResponseMessage] = useState('');
- 
- 
-  const handleSubmit = async (e) => {
+
+  const handleFileChange = (e) => {
+    setNomineeProof(e.target.files[0]); // Update state with the selected file
+  };
+  console.log(suserPolicyId);
+
+  const handleSave = async (e) => {
     e.preventDefault();
- 
-    const policyDocument = {
-      policyType: 'TERM',
-      annualIncome: parseFloat(annualIncome),
-      anyDisease: anyDisease,
-      nomineeName: nomineeName,
-      nomineeRelation: nomineeRelation,
-      nomineeEmail: nomineeEmail,
-      nomineeProof: nomineeProof,
-      userPolicy:{userPolicyId:suserPolicyId}
-    };
- 
+    const formData = new FormData();
+    formData.append('policyType', 'TERM');
+    formData.append('annualIncome', annualIncome? Number(annualIncome) : null);
+    formData.append('anyDisease', anyDisease);
+    formData.append('nomineeName', nomineeName);
+    formData.append('nomineeRelation', nomineeRelation);
+    formData.append('nomineeEmail', nomineeEmail);
+    formData.append('nomineeProof', nomineeProof); // Ensure this matches the backend
+    formData.append('userPolicyId', suserPolicyId);
+    console.log(formData);
+
     try {
-      const response = await axios.post('http://localhost:8006/policy-documents/create', policyDocument);
+      const response = await axios.post('http://localhost:8007/policy-documents/create/term', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log(response);
       setResponseMessage('Policy document created successfully!');
     } catch (error) {
       console.error('Error creating policy document:', error);
       setResponseMessage('Error creating policy document.');
     }
   };
- 
+
   return (
     <div>
       <Navbar1/>
@@ -51,7 +58,7 @@ const TermPolicyForm = () => {
             <img src={require('../src/images/userimages/purchaseimage.png')} alt="Term Insurance" className="form-image" />
           </div>
           <div className="form-right">
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSave}>
               <div className="form-group">
                 <label>Annual Income</label>
                 <input type="number" className="form-input" value={annualIncome} onChange={(e) => setAnnualIncome(e.target.value)} required />
@@ -77,8 +84,9 @@ const TermPolicyForm = () => {
               </div>
               <div className="form-group">
                 <label>Nominee Proof</label>
-                <input type="text" className="form-input" value={nomineeProof} onChange={(e) => setNomineeProof(e.target.value)} required />
+                <input type="file" className="form-input" onChange={handleFileChange} required />
               </div>
+              
               <div className="form-group">
                 <button type="submit" className="submit">Submit</button>
               </div>
@@ -90,6 +98,5 @@ const TermPolicyForm = () => {
     </div>
   );
 };
- 
+
 export default TermPolicyForm;
- 

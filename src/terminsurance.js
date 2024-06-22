@@ -1,71 +1,308 @@
-import React from 'react';
+import React, { useState,useContext } from 'react';
+import './terminsurance.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './lifeinsurance.css';
-import trendinglogo from '../src/images/logosfolder/trendinglogo.png';
-import termlogo from '../src/images/userimages/terminsurancemain.png';
- 
-const TermInsurance = ({ addPolicy }) => {
+import { AppContext } from './AppContext';
+
+const TermPolicyDetails = () => {
+  const [age, setAge] = useState('');
+  const [termPeriod, setTermPeriod] = useState('');
+  const [sumAssured, setSumAssured] = useState('');
+  const [occupation, setOccupation] = useState('normal');
+  const [accidentalDeath, setAccidentalDeath] = useState(false);
+  const [criticalIllness, setCriticalIllness] = useState(false);
+  const [waiverOfPremium, setWaiverOfPremium] = useState(false);
+  const [paymentFrequency, setPaymentFrequency] = useState('annually');
+  const [premiumResult, setPremiumResult] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const { suserId, suserPolicyId, setUserPolicyId } = useContext(AppContext);
   const navigate = useNavigate();
  
- 
-  const handleBuyNowClick = () => {
-    navigate('/term-policy-form');
-  };
-  const handleBuyNow = async () => {
-    const policyData = {
-      policyName: 'Term Insurance',
-      policyDescription: 'Security that lasts a lifetime, for the ones you cherish',
-      termsAndConditons: 'Term Period, Coverage, Premium, Renewals, Optional Riders'
+    const handleBuyNowClick = () => {
+      navigate('/term-policy-form');
     };
  
-    try {
-      const response = await axios.post('/api/policies', policyData);
-      const policy = response.data;
-      addPolicy({
-        name: policy.policyName,
-        image: termlogo
-      });
-      navigate('/mypolicies');
-    } catch (error) {
-      console.error('There was an error creating the policy!', error);
+  const calculatePremium = () => {
+    const sumAssuredValue = parseFloat(sumAssured);
+    const baseRate = 0.001;
+    const ageValue = parseInt(age);
+    const smoker = false; // Assuming a non-smoker for simplicity
+    const occupationFactor = occupation === 'high' ? 0.15 : 0.05;
+ 
+    const basePremium = sumAssuredValue * baseRate;
+    const ageFactor = ageValue > 45 ? 0.25 : 0.10;
+    const healthFactor = smoker ? 0.20 : 0.10;
+ 
+    let adjustedPremium = basePremium + (basePremium * ageFactor) + (basePremium * healthFactor) + (basePremium * occupationFactor);
+ 
+    if (accidentalDeath) adjustedPremium += 2000;
+    if (criticalIllness) adjustedPremium += 3000;
+    if (waiverOfPremium) adjustedPremium += 1000;
+ 
+    let frequencyMultiplier;
+    switch (paymentFrequency) {
+      case 'annually':
+        frequencyMultiplier = 1;
+        break;
+      case 'half-yearly':
+        frequencyMultiplier = 1 / 2;
+        break;
+      case 'quarterly':
+        frequencyMultiplier = 1 / 4;
+        break;
+      case 'monthly':
+        frequencyMultiplier = 1 / 12;
+        break;
     }
+ 
+    const finalPremium = adjustedPremium * frequencyMultiplier;
+    setPremiumResult(adjustedPremium.toFixed(2));
+    setShowModal(false);
+  };
+ 
+  const handleSave = () => {
+    const currentDate = new Date();
+    const formattedStartDate = currentDate.toISOString();
+    
+    // Convert formattedStartDate to a Date object
+    const StartDate = new Date(formattedStartDate);
+    
+    // Calculate endDate: Add one year to startDate
+    const endDate = new Date(StartDate);
+    endDate.setFullYear(StartDate.getFullYear() +  parseInt(document.getElementById('termPeriod').value));
+    const dataToSave = {
+      coverage: parseFloat(document.getElementById('sumAssured').value),
+      term: parseInt(document.getElementById('termPeriod').value),
+      premiumTerm: document.getElementById('paymentFrequency').value,
+      premium: premiumResult,
+      premiumCount: 0,
+      startDate:StartDate,
+      endDate:endDate,
+      status: "pending",
+      leftcoverage:0,
+      policy: { policyId: 2 },
+      user:{userId:suserId},
+    };
+    console.log(suserId);
+
+    axios.post('http://localhost:8007/user-policies/create', dataToSave)
+      .then(response => {
+        setUserPolicyId(response.data);
+        console.log(suserPolicyId);
+        console.log('Data saved successfully:', response.data);
+        
+      })
+      .catch(error => {
+        console.error('Error saving data:', error);
+      });
+    setShowModal(false);
+    alert("Data saved successfully!");
   };
  
   return (
-    <div>
-      <div className="bodyt">
-        <div className="buyterm">
-          <h1>Term life Insurance Shield</h1>
-          <p className="sub">Security that lasts a lifetime, for the ones you cherish</p>
-          <p className="sub1">It provides coverage for a specific term and pays a benefit in the event of the insured's death during that term. It is designed to provide financial protection for your loved ones.</p>
-          <img src={termlogo} alt="termlogo" className="termlogo" />
-          <div className="trending-a">
-            <img src={trendinglogo} alt="trendinglogo" className="trendinglogo" />
-            <p className="trending">Trending</p>
+    <div className="term-policy-page">
+      <div className="term-policy-container">
+        <div className="term-policy-info">
+          <h2>Term Life Insurance Shield</h2>
+          <p className="subtitle">Security that lasts a lifetime, for the ones you cherish</p>
+          <p>
+            It provides coverage for a specific term and pays a benefit in the event of the insured's death during that term.
+            It is designed to provide financial protection for your loved ones.
+          </p>
+          <div className="badges">
+            <div className="badge">Trending</div>
+            <div className="badge">Tax Saver</div>
           </div>
-          <div className="tax-a">
-            <p className="tax">Tax Saver</p>
-          </div>
-          <p className="terms">Terms and Conditions:</p>
-          <ul className="items">
+          <h3>Terms and Conditions:</h3>
+          <ul>
             <li>Term Period: Typically choose up the period to secure your loved ones after your demise.</li>
             <li>Coverage: Death benefit paid to beneficiaries if the insured dies during the term.</li>
-            <li>Premium: Determined based on factors such as age, health conditions, term period and Optional Riders.</li>
+            <li>Premium: Determined based on factors such as age, health conditions, term period, and Optional Riders.</li>
             <li>Renewals: Renew your policy towards the end of term life for continued protection and peace of mind.</li>
           </ul>
-          <p className="optional">Optional Riders</p>
-          <ol className="items-1">
+          <h3>Optional Riders:</h3>
+          <ul>
             <li>Accidental Death Benefit</li>
             <li>Critical Illness Rider</li>
-            <li>Waiver of Premium</li>
-          </ol>
-          <button className="buynow" onClick={handleBuyNowClick}>Buy now</button>
+            <li>Waiver Of Premium</li>
+          </ul>
+          <button className="buy-now-button" onClick={handleBuyNowClick}>Buy Now</button>
+        </div>
+        <div className="term-premium-calculator">
+          <h2 className="calculator-title">Premium Calculator</h2>
+          <form className='form-main'>
+            <div className="form-group">
+              <label htmlFor="age">Age</label>
+              <input
+                type="number"
+                className="form-control"
+                id="age"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="termPeriod">Term Period</label>
+              <select
+                className="form-control"
+                id="termPeriod"
+                value={termPeriod}
+                onChange={(e) => setTermPeriod(e.target.value)}
+                required
+              >
+                <option value="">Select</option>
+                <option value="5">5 years</option>
+                <option value="10">10 years</option>
+                <option value="15">15 years</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="sumAssured">Sum Assured</label>
+            
+              <select
+                className="form-control"
+                id="sumAssured"
+                value={sumAssured}
+                onChange={(e) => setSumAssured(e.target.value)}
+                required
+              >
+                <option value="">Select</option>
+                <option value="1500000">15 lakh</option>
+                <option value="2500000">25 lakh</option>
+                <option value="5000000">50 years</option>
+              </select>
+            </div>
+            <div className="form-groupO">
+              <label>Occupation</label>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  id="normalRisk"
+                  name="occupation"
+                  value="normal"
+                  checked={occupation === 'normal'}
+                  onChange={() => setOccupation('normal')}
+                />
+                <label className="form-check-label" htmlFor="normalRisk">
+                  Normal Risk
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  id="highRisk"
+                  name="occupation"
+                  value="high"
+                  checked={occupation === 'high'}
+                  onChange={() => setOccupation('high')}
+                />
+                <label className="form-check-label" htmlFor="highRisk">
+                  High Risk
+                </label>
+              </div>
+            </div>
+            <div className="form-groupR">
+             
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="accidentalDeath"
+                  checked={accidentalDeath}
+                  onChange={() => setAccidentalDeath(!accidentalDeath)}
+                />
+                <label className="form-check-label" htmlFor="accidentalDeath">
+                  Accidental Death
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="criticalIllness"
+                  checked={criticalIllness}
+                  onChange={() => setCriticalIllness(!criticalIllness)}
+                />
+                <label className="form-check-label" htmlFor="criticalIllness">
+                  Critical Illness
+                </label>
+              </div>
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="waiverOfPremium"
+                  checked={waiverOfPremium}
+                  onChange={() => setWaiverOfPremium(!waiverOfPremium)}
+                />
+                <label className="form-check-label" htmlFor="waiverOfPremium">
+                  Waiver Of Premium
+                </label>
+              </div>
+            </div>
+            <div className="form-group">
+              <label htmlFor="paymentFrequency">Payment Frequency</label>
+              <select
+                className="form-control"
+                id="paymentFrequency"
+                value={paymentFrequency}
+                onChange={(e) => setPaymentFrequency(e.target.value)}
+              >
+                <option value="annually">Annually</option>
+                <option value="half-yearly">Half-Yearly</option>
+                <option value="quarterly">Quarterly</option>
+                <option value="monthly">Monthly</option>
+              </select>
+            </div>
+            <div className="button-group">
+              <button
+                type="button"
+                className="calculate-button"
+                onClick={calculatePremium}
+              >
+                Calculate Premium
+              </button>
+              <button
+                type="button"
+                className="save-button"
+                onClick={() => setShowModal(true)}
+              >
+                Save
+              </button>
+            </div>
+            {premiumResult && (
+            <div className="premium-result">
+              Heyoo!! Here is your calculated premium is ₹{premiumResult}
+            </div>
+          )}
+          </form>
+          
         </div>
       </div>
+      {showModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Calculated Premium: ₹{premiumResult}</h3>
+            <p>Do you want to save the data?</p>
+            <div className="modal-buttons">
+              <button onClick={handleSave} className="btn btn-success">
+                Yes
+              </button>
+              <button
+                onClick={() => setShowModal(false)}
+                className="btn btn-danger"
+              >
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
-}
+};
  
-export default TermInsurance;
- 
+export default TermPolicyDetails;

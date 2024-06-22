@@ -1,0 +1,39 @@
+.adminnavbar {
+    background-color:#E7DDFF;
+    width: 15%;
+    position: fixed;
+    height: 100vh;
+    margin-top: 2%;
+}
+ 
+.adminnavbar-list {
+ 
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+ 
+ .adminnavbar-list li {
+    display: flex;
+    padding: 5%;
+    color: black;
+    padding-left: 15%;
+}
+.adminnavbar-list li:hover {
+    background-color:white;
+}
+ 
+.adminnavbar-list li a {
+    display: block;
+    color: black;
+    text-decoration: none;
+}
+ 
+.adminnavbar-list li a:hover {
+    background-color: white;
+}
+.adminnavbar-list li svg {
+    margin-top: 4px;
+    margin-right: 10px;
+   
+}

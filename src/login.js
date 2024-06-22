@@ -2,25 +2,23 @@ import React, { useState, useEffect ,useContext} from 'react';
 import logo from './images/logosfolder/applogo.png';
 import './loginComponent.css';
 import { useNavigate } from 'react-router-dom';
-import { UserContext } from './usercontext';
+import { AppContext } from './AppContext';
  
-const LoginComponent = ({ loginUrl, imageUrl, welcomsmsg,role }) => {
+const LoginComponent = ({  imageUrl, welcomsmsg,role }) => {
     const [emailId, setEmailId] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loggedIn, setLoggedIn] = useState(false);
 
-    const { suserId,setUserId } = useContext(UserContext);
+    const { suserId, setUserId } = useContext(AppContext);
  
     const navigate = useNavigate();
- 
-    // Clear any session or local storage on component mount
-    useEffect(() => {
-        sessionStorage.clear();  // or localStorage.clear();
-    }, []);
+    
  
     const handlehomeclick = () => {
+        
         navigate("/navbar");
+    
     };
  
     const handleSubmit = async (e) => {
@@ -30,39 +28,50 @@ const LoginComponent = ({ loginUrl, imageUrl, welcomsmsg,role }) => {
             formData.append('emailId', emailId);
             formData.append('password', password);
             formData.append('role', role);
- 
-            const response = await fetch(loginUrl, {
+    
+            const response = await fetch('http://localhost:8007/users/login', {
                 method: 'POST',
                 body: formData
             });
- 
-                 
-            if (response.ok) {
-                
+    
+            if (response.ok&& role==="user") {
                 const data = await response.json();
                 console.log('Login response:', data);
-     
+                
+                // Update suserId state
+                setUserId(data); 
+    
+                // Now, suserId will not be immediately updated here due to the asynchronous nature
+                console.log(suserId); // This may still log the old value of suserId
+    
                 if (data) {
                     // Save user data in session or local storage if needed
                     setLoggedIn(true);
-                    setUserId(data); 
-                    console.log(suserId);
-                    sessionStorage.setItem('user', JSON.stringify(data));  // or localStorage.setItem();
-     
+                    sessionStorage.setItem('user', JSON.stringify(data));
                     navigate('/section2', { state: { user: data } }); // Navigate to dashboard or appropriate page
                 } else {
                     setError('Invalid email or password');
                 }
-            }
-            else  {
+            } 
+            else if(response.ok && role==="admin")
+                {
+ navigate('/admindashboard');
+
+                }
+                else if(response.ok && role==="agent")
+                    {
+     navigate('/agentdashboard');
+    
+                    }
+                else {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-           
         } catch (error) {
             console.error('Error:', error);
             setError('An error occurred. Please try again later.');
         }
     };
+    
  
     return (
         <div>

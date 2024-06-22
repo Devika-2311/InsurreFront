@@ -1,0 +1,65 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+ 
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #DFDFF6;
+    padding: 10px 20px;
+    color: white;
+}
+ 
+.navbar-left,
+.navbar-right {
+    display: flex;
+    align-items: center;
+}
+ 
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+ 
+.logo {
+    height: 50px;
+    margin-right: 9%;
+    margin-left: 15%;
+}
+ 
+.greeting {
+    font-size: 2rem;
+    color: black;
+}
+ 
+ 
+ 
+.profile-image {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+ 
+h1 {
+    font-size: 1rem;
+    margin-right: 20px;
+    color: black;
+}
+ 
+.action-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #2222E0;
+    border: none;
+    border-radius: 20px;
+    color: white;
+    cursor: pointer;
+}
+ 
+.action-button:hover {
+    background-color: #777;
+}
